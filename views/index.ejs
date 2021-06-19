@@ -7,37 +7,56 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
     integrity="undefined" crossorigin="anonymous" />
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
   <title>URL Shortener</title>
 </head>
 
-<body>
-  <div class="container">
+<body class="<%= theme == 'dark' ? 'bootstrap-dark' : 'bootstrap' %>">
+
+  <div class="full-height container-fluid p-3 my-3 <%= theme == 'dark' ? 'bg-dark text-white' : '' %>">
     <h1>URL Shortener</h1>
+    <form action="/" method="GET">
+      <input type="hidden" name="theme" value="<%= theme == 'dark' ? 'light' : 'dark' %>" />
+      <button class="btn <%= theme == 'dark' ? 'btn-light' : 'btn-dark' %>">
+        <%= theme == 'dark' ? 'Light Mode' : 'Dark Mode' %>
+      </button>
+    </form>
     <form action="/shortUrl" method="POST" class="my-4 form-inline">
       <div class="form-group">
         <input type="url" placeholder="Url" name="shortUrl" id="shortUrl" class="form-control" />
       </div>
       <button type="submit" class="btn btn-primary">Shrink</button>
     </form>
-    <table class="table table-responsive">
-      <thead>
-        <tr>
-          <th>Long URL</th>
-          <th>Short URL</th>
-          <th>Clicks</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% urls.forEach(url => { %>
-        <tr>
-          <td><a class="btn btn-primary" role="button" href="<%= url.longUrl %>"><%= url.longUrl %></a></td>
-          <td><a class="btn btn-success" role="button" href="<%= url.shortUrl %>"><%= url.shortUrl %></a></td>
-          <td><%= url.clicks %></td>
-        </tr>
-        <% }) %>
+    <form action="/deleteUrl" method="POST" class="my-4 form-inline">
+      <table class="table table-responsive <%= theme == 'dark' ? 'table-dark' : '' %>">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th scope="col">Long URL</th>
+            <th scope="col">Short URL</th>
+            <th scope="col">Clicks</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% urls.forEach((url, index) => { %>
+          <tr>
+            <th scope="row"><%= index+1 %></th>
+            <td><a class="<%= theme == 'dark' ? 'link-light' : 'link-dark' %>" role="button"
+                href="<%= url.longUrl %>"><%= url.longUrl %></a></td>
+            <td><a class="<%= theme == 'dark' ? 'link-light' : 'link-dark' %>" role="button"
+                href="<%= url.shortUrl %>"><%= url.shortUrl %></a>
+            </td>
+            <td><%= url.clicks %></td>
+            <td><button type="submit" formaction="<%= `/deleteUrl?id=${url._id}` %>"
+                class="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+          <% }) %>
 
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </form>
   </div>
 </body>
 
