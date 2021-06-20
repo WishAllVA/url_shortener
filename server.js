@@ -78,7 +78,7 @@ app.get('/dashboard', ensureAuthenticated, async (req, res, next) => {
     // res.render('dashboard', { username: req.user.username })
 })
 
-app.post('/shortUrl', async (req, res, next) => {
+app.post('/shortUrl', ensureAuthenticated, async (req, res, next) => {
     let { shortUrl } = req.body
     if (!shortUrl) {
         let message = ['URL is required']
@@ -94,7 +94,7 @@ app.post('/shortUrl', async (req, res, next) => {
     res.redirect(`/?theme=${colorScheme}`)
 })
 
-app.post('/deleteUrl', async (req, res, next) => {
+app.post('/deleteUrl', ensureAuthenticated, async (req, res, next) => {
     await ShortUrl.findByIdAndDelete(req.query.id)
     res.redirect(`/?theme=${colorScheme}`)
 })
