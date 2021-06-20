@@ -17,11 +17,41 @@
     "rules": {
         "semi": [
             "error",
-            "always"
+            "never"
         ],
         "quotes": [
             "error",
-            "double"
-        ]
+            "single"
+        ],
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
+        "array-bracket-spacing": [
+            "error",
+            "never"
+        ],
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
+        "indent": [
+            2,
+            4
+        ],
+        "curly": [
+            2,
+            "multi"
+        ],
+        "max-len": [
+            "error",
+            {
+                "code": 120,
+                "tabWidth": 4
+            }
+        ],
+        "linebreak-style": 0,
+        "prefer-const": 2,
+        "new-cap": 0
     }
 }

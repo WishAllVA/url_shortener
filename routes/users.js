@@ -26,20 +26,20 @@ router.get('/register', (req, res) => {
 // Register handle
 router.post('/register', async (req, res) => {
     const { username, email, password, password2 } = req.body
-    let errors = []
+    const errors = []
     if (!username || !email || !password || !password2) {
-        let msg = 'Please fill all the necessary fields'
+        const msg = 'Please fill all the necessary fields'
         errors.push({ msg })
     }
     if (password.length < 6) {
-        let msg = 'Password should be atleast 6 characters'
+        const msg = 'Password should be atleast 6 characters'
         errors.push({ msg })
     }
     if (password !== password2) {
-        let msg = 'Passwords should match'
+        const msg = 'Passwords should match'
         errors.push({ msg })
     }
-    if (errors.length > 0) {
+    if (errors.length > 0)
         res.render('register', {
             errors,
             username,
@@ -47,10 +47,10 @@ router.post('/register', async (req, res) => {
             password,
             password2
         })
-    } else {
+    else {
         // Front end Validations passed
         // Check duplicate username and email
-        let checkDuplicateUser = await User.findOne({ username: username, email: email })
+        const checkDuplicateUser = await User.findOne({ username: username, email: email })
         if (checkDuplicateUser) {
             let msg = ''
             if (username === checkDuplicateUser.username)
@@ -66,27 +66,23 @@ router.post('/register', async (req, res) => {
             })
         } else {
             // Hash the password and then save the user
-            let newUser = new User({
+            const newUser = new User({
                 username,
                 email,
                 password
             })
-            let salt = await bcrypt.genSalt(10)
-            if (!salt) throw new Error("Salt Error")
-            let hash = await bcrypt.hash(newUser.password, salt)
-            if (!hash) throw new Error("Hash Error")
+            const salt = await bcrypt.genSalt(10)
+            if (!salt) throw new Error('Salt Error')
+            const hash = await bcrypt.hash(newUser.password, salt)
+            if (!hash) throw new Error('Hash Error')
             newUser.password = hash
-            let user = await newUser.save()
+            const user = await newUser.save()
             if (user) {
                 req.flash('success_msg', 'You are successfully registered. Login to continue')
                 res.redirect('/users/login')
-            }
-
-            else throw new Error("Could not create user")
-
+            } else throw new Error('Could not create user')
         }
     }
-
 })
 
 router.get('/logout', (req, res) => {
