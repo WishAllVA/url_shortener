@@ -14,12 +14,14 @@
 <body class="<%= theme == 'dark' ? 'bootstrap-dark' : 'bootstrap' %>">
 
   <div class="full-height container-fluid p-3 my-3 <%= theme == 'dark' ? 'bg-dark text-white' : '' %>">
-    <h1>URL Shortener</h1>
-    <form action="/" method="GET">
+    <h1>Welcome <%= username %></h1>
+    <h2>URL Shortener</h2>
+    <form action="/dashboard" method="GET">
       <input type="hidden" name="theme" value="<%= theme == 'dark' ? 'light' : 'dark' %>" />
       <button class="btn <%= theme == 'dark' ? 'btn-light' : 'btn-dark' %>">
         <%= theme == 'dark' ? 'Light Mode' : 'Dark Mode' %>
       </button>
+      <a type="button" href="/users/logout" class="btn btn-secondary">Logout</a>
     </form>
     <form action="/shortUrl" method="POST" class="my-4 form-inline">
       <div class="form-group">
